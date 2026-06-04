@@ -20,7 +20,7 @@ on:
           - planck_ez/glow
         default: voyager
       layout_id:
-        description: "Layout id available in URL https://configure.zsa.io/voyager/layouts/[ID_IS_HERE]/latest"
+        description: "Layout id available in URL https://configure.zsa.io/voyager/[layout_geometry]/[layout_id]/latest"
         required: true
         default: "Lm4R0"
   workflow_call:
@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v5
       - name: Fetch layout
         run: |
-          ./scripts/fetch_layout.sh \
+          ./scripts/fetch-layout.sh \
             "${{ inputs.layout_id || github.event.inputs.layout_id }}" \
             "${{ inputs.layout_geometry || github.event.inputs.layout_geometry }}"
       - name: Commit and push if changes
