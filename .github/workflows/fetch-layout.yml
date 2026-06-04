@@ -1,0 +1,78 @@
+name: Fetch layout
+
+on:
+  workflow_dispatch:
+    inputs:
+      layout_geometry:
+        description: "Keyboard type"
+        type: choice
+        options:
+          - voyager
+          - moonlander/reva
+          - moonlander/revb
+          - ergodox_ez
+          - ergodox_ez/m32u4/glow
+          - ergodox_ez/m32u4/shine
+          - ergodox_ez/stm32
+          - ergodox_ez/stm32/glow
+          - ergodox_ez/stm32/shine
+          - planck_ez
+          - planck_ez/glow
+        default: voyager
+      layout_id:
+        description: "Layout id available in URL https://configure.zsa.io/voyager/layouts/[ID_IS_HERE]/latest"
+        required: true
+        default: "Lm4R0"
+  workflow_call:
+    inputs:
+      layout_geometry:
+        type: string
+        required: true
+        default: voyager
+      layout_id:
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Download layout source
+        id: download-layout-source
+        run: |
+          response=$(curl --location 'https://oryx.zsa.io/graphql' --header 'Content-Type: application/json' --data '{"query":"query getLayout($hashId: String!, $revisionId: String!, $geometry: String) {layout(hashId: $hashId, geometry: $geometry, revisionId: $revisionId) {  revision { hashId, qmkVersion, title }}}","variables":{"hashId":"${{ github.event.inputs.layout_id }}","geometry":"${{ github.event.inputs.layout_geometry }}","revisionId":"latest"}}' | jq '.data.layout.revision | [.hashId, .qmkVersion, .title]')
+          hash_id=$(echo "${response}" | jq -r '.[0]')
+          firmware_version=$(printf "%.0f" $(echo "${response}" | jq -r '.[1]'))
+          change_description=$(echo "${response}" | jq -r '.[2]')
+          if [[ -z "${change_description}" ]]; then
+          change_description="latest layout modification made with Oryx"
+          fi
+
+          curl -L "https://oryx.zsa.io/source/${hash_id}" -o source.zip
+
+          echo firmware_version=${firmware_version} >> "$GITHUB_OUTPUT"
+          echo change_description=${change_description} >> "$GITHUB_OUTPUT"
+
+      - name: Unzip the source file
+        run: |
+          output="${{ github.event.inputs.layout_id }}"
+          mkdir -p "$output"
+          unzip -q source.zip -d "$output"
+          mv "$output/*_source" "$output/source"
+          rm source.zip
+
+      - name: Commit and push if changes
+        env:
+          CHANGE_DESCRIPTION: ${{ steps.download-layout-source.outputs.change_description }}
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git add .
+          printf "✨(oryx): %s\n" "$CHANGE_DESCRIPTION" | git commit -F - || echo "No layout change"
+          git push
