@@ -40,6 +40,7 @@ curl -sSfLo source.zip "$layout_source"
 output="keyboards/$LAYOUT_GEOMETRY/$LAYOUT_ID"
 mkdir -p "$output"
 unzip -q -o source.zip -d "$output"
+rm -rf "$output/source"
 mv $output/zsa_${LAYOUT_GEOMETRY}_*_source "$output/source"
 rm source.zip
 
