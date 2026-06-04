@@ -43,13 +43,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Fetch layout
+        id: fetch-layout
         run: |
           ./scripts/fetch-layout.sh \
             "${{ inputs.layout_geometry || github.event.inputs.layout_geometry }}" \
             "${{ inputs.layout_id || github.event.inputs.layout_id }}"
       - name: Commit and push if changes
         env:
-          CHANGE_DESCRIPTION: ${{ steps.download-layout-source.outputs.change_description }}
+          CHANGE_DESCRIPTION: ${{ steps.fetch-layout.outputs.change_description }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
