@@ -21,19 +21,19 @@ enum tap_dance_codes {
   DANCE_1,
 };
 
-#define DUAL_FUNC_0 LT(3, KC_V)
-#define DUAL_FUNC_1 LT(2, KC_A)
-#define DUAL_FUNC_2 LT(11, KC_F22)
-#define DUAL_FUNC_3 LT(10, KC_W)
-#define DUAL_FUNC_4 LT(11, KC_F19)
-#define DUAL_FUNC_5 LT(6, KC_F17)
-#define DUAL_FUNC_6 LT(11, KC_F6)
-#define DUAL_FUNC_7 LT(6, KC_B)
-#define DUAL_FUNC_8 LT(11, KC_E)
-#define DUAL_FUNC_9 LT(10, KC_U)
-#define DUAL_FUNC_10 LT(2, KC_F19)
-#define DUAL_FUNC_11 LT(8, KC_F18)
-#define DUAL_FUNC_12 LT(9, KC_B)
+#define DUAL_FUNC_0 LT(15, KC_F)
+#define DUAL_FUNC_1 LT(1, KC_X)
+#define DUAL_FUNC_2 LT(9, KC_F23)
+#define DUAL_FUNC_3 LT(12, KC_3)
+#define DUAL_FUNC_4 LT(1, KC_F14)
+#define DUAL_FUNC_5 LT(3, KC_B)
+#define DUAL_FUNC_6 LT(7, KC_F19)
+#define DUAL_FUNC_7 LT(5, KC_F5)
+#define DUAL_FUNC_8 LT(4, KC_F21)
+#define DUAL_FUNC_9 LT(12, KC_T)
+#define DUAL_FUNC_10 LT(6, KC_F9)
+#define DUAL_FUNC_11 LT(8, KC_Y)
+#define DUAL_FUNC_12 LT(15, KC_0)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [3] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,                                          KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          
-    KC_NO,          KC_NO,          KC_CAPS,        KC_DELETE,      KC_INSERT,      KC_PAGE_UP,                                     LCTL(KC_LEFT),  TD(DANCE_0),    TD(DANCE_1),    LCTL(KC_RIGHT), ST_MACRO_2,     KC_NO,          
+    KC_NO,          KC_CAPS,        CW_TOGG,        KC_DELETE,      KC_INSERT,      KC_PAGE_UP,                                     LCTL(KC_LEFT),  TD(DANCE_0),    TD(DANCE_1),    LCTL(KC_RIGHT), ST_MACRO_2,     KC_NO,          
     KC_NO,          KC_LEFT_ALT,    KC_LEFT_GUI,    KC_LEFT_SHIFT,  KC_LEFT_CTRL,   KC_PGDN,                                        KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       LCTL(KC_A),     KC_NO,          
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          LCTL(KC_MINUS), LCTL(KC_EQUAL), KC_NO,          QK_LLCK,        KC_NO,          
                                                     LCTL(KC_BSPC),  LCTL(KC_DELETE),                                KC_TRANSPARENT, KC_TRANSPARENT
@@ -109,10 +109,6 @@ const uint16_t PROGMEM combo3[] = { KC_DOWN, KC_UP, COMBO_END};
 const uint16_t PROGMEM combo4[] = { KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM combo5[] = { MT(MOD_RCTL, KC_J), MT(MOD_RSFT, KC_K), COMBO_END};
 const uint16_t PROGMEM combo6[] = { KC_X, KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM combo7[] = { KC_U, KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM combo8[] = { KC_COMMA, KC_DOT, COMBO_END};
-const uint16_t PROGMEM combo9[] = { KC_M, KC_COMMA, COMBO_END};
-const uint16_t PROGMEM combo10[] = { KC_M, KC_COMMA, KC_DOT, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, RCTL(KC_V)),
@@ -122,10 +118,6 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo4, RCTL(KC_C)),
     COMBO(combo5, KC_ESCAPE),
     COMBO(combo6, RCTL(KC_X)),
-    COMBO(combo7, CW_TOGG),
-    COMBO(combo8, KC_DQUO),
-    COMBO(combo9, KC_QUOTE),
-    COMBO(combo10, KC_EXLM),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -163,7 +155,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
     [2] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {0,255,255}, {172,255,255}, {0,0,0}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {172,255,255}, {0,0,0}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {172,255,255}, {39,255,255}, {215,255,255}, {39,255,255}, {0,0,0}, {0,0,0}, {172,255,255}, {215,255,255}, {28,128,235}, {215,255,255}, {0,0,0}, {0,0,0}, {172,255,255}, {39,255,255}, {215,255,255}, {39,255,255}, {0,0,0}, {0,0,0}, {39,255,255}, {39,255,255} },
 
-    [3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {215,255,255}, {215,255,255}, {172,255,255}, {0,0,0}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {172,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {129,255,255}, {129,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {215,255,255}, {0,255,255}, {0,255,255}, {215,255,255}, {0,255,255}, {0,0,0}, {39,255,255}, {39,255,255}, {39,255,255}, {39,255,255}, {129,255,255}, {0,0,0}, {0,0,0}, {215,255,255}, {215,255,255}, {0,0,0}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0} },
+    [3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {129,255,255}, {215,255,255}, {215,255,255}, {172,255,255}, {0,0,0}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {172,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {129,255,255}, {129,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {215,255,255}, {0,255,255}, {0,255,255}, {215,255,255}, {0,255,255}, {0,0,0}, {39,255,255}, {39,255,255}, {39,255,255}, {39,255,255}, {129,255,255}, {0,0,0}, {0,0,0}, {215,255,255}, {215,255,255}, {0,0,0}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0} },
 
     [4] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,255,255}, {215,255,255}, {215,255,255}, {215,255,255}, {0,0,0}, {0,0,0}, {86,255,255}, {86,255,255}, {86,255,255}, {86,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {129,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {39,255,255}, {215,255,255}, {39,255,255}, {129,255,255}, {0,0,0}, {0,0,0}, {215,255,255}, {39,255,255}, {215,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {39,255,255}, {215,255,255}, {39,255,255}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0} },
 
